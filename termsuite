@@ -1,0 +1,136 @@
+#!/bin/bash
+
+JAR=$(ls /opt/termsuite-core-*.jar) # classpath for jar file
+
+HELP="Usage: termsuite fr.univnantes.termsuite.tools.{PreprocessorCLI | TerminologyExtractorCLI | AlignerCLI}"
+
+EXEC=$1 # Get the executable name as first argument from CLI
+if [ "$EXEC"="termsuite" ]; then
+  # echo $"Shift => ${1}"
+  shift # remove first argument
+  MAIN=$1 # ...and get component name as next argument from CLI
+  COMP=$(echo ${1} | cut -f5 -d.)
+  case ${COMP} in
+    PreprocessorCLI | TerminologyExtractorCLI | AlignerCLI )
+      # echo $"Shift => ${1}"
+      shift # remove second argument
+    ;;
+
+    * )
+      echo $"$HELP"
+      exit 1
+    ;;
+  esac
+else
+  echo $"$HELP"
+  exit 1
+fi
+
+# Init useful variables
+INPUT_PATH=""
+INPUT_FORMAT=""
+OUTPUT_PATH=""
+OUTPUT_FORMAT=""
+PARAMS=""
+
+# Parameters parsing
+argsParse () {
+  while [[ $# > 0 ]] ; do
+    case "${1}" in
+      --input )
+        INPUT_PATH="${2}"
+        # echo $"Shift => ${1} ${2}"
+        # echo $"PARAMS => ${PARAMS}"
+        shift # remove current argument $1
+        shift # remove current arg's value $2
+        ;;
+
+      --output )
+        OUTPUT_PATH="${2}"
+        # echo $"Shift => ${1} ${2}"
+        # echo $"PARAMS => ${PARAMS}"
+        shift # remove current argument $1
+        shift # remove current arg's value $2
+        ;;
+
+      --input-format )
+        INPUT_FORMAT="${2}"
+        # echo $"Shift => ${1} ${2}"
+        shift # remove current argument $1
+        shift # remove current arg's value $2
+        ;;
+
+      --output-format )
+        OUTPUT_FORMAT="${2}"
+        # echo $"Shift => ${1} ${2}"
+        shift # remove current argument $1
+        shift # remove current arg's value $2
+        ;;
+
+      --param:* )
+        paramNameString=$(echo ${1} | cut -f1 -d=)
+        paramName=$(echo ${paramNameString} | cut -f2 -d:)
+        paramValue=$(echo ${1} | cut -f2 -d=)
+
+        case ${paramName} in
+          # Input corpus' files uploaded to Custom resource directory ?
+          # resource-dir )
+          #   PARAMS+=" --${paramName} ${INPUT_PATH}"
+          #   ;;
+
+          resource-jar | synonyms-dico | dictionary | source-termino | target-termino | term-list )
+            PARAMS+=" --${paramName} ${INPUT_PATH}/${paramValue}"
+            ;;
+
+          tsv | tbx | json )
+            PARAMS+=" --${paramName} ${OUTPUT_PATH}/${paramValue}"
+            ;;
+
+          tsv-anno | json-anno | xmi-anno )
+            PARAMS+=" --${paramName} ${OUTPUT_PATH}"
+            ;;
+
+          * )
+            PARAMS+=" --${paramName} ${paramValue}"
+            # echo $"PARAMS => ${paramNameString} * ${paramName} * ${paramValue}"
+            ;;
+        esac
+
+        # echo $"Shift => ${1}"
+        # echo $"PARAMS => ${PARAMS}"
+        shift # remove current argument $1
+        ;;
+
+      * )
+        echo $"Unknown OMTD's Galaxy parameter : ${1}"
+        exit 1
+      ;;
+    esac
+  done
+}
+
+# Update OMTD command with parameters' values (<executable> <component> <parameters>)
+case ${COMP} in
+  PreprocessorCLI )
+    PARAMS="-t /opt/treetagger"
+    argsParse "$@"
+    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
+  ;;
+
+  TerminologyExtractorCLI )
+    PARAMS="-t /opt/treetagger"
+    # echo $"Parsing parameters => $@"
+    argsParse "$@"
+    # CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
+    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS} --tsv ${OUTPUT_PATH}/TermExtractTSV.tsv --language en --info" # Test OMTD
+  ;;
+
+  AlignerCLI )
+    argsParse "$@"
+    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
+  ;;
+esac
+
+# Run java command
+echo "Executing: $CMD"
+exec $CMD
