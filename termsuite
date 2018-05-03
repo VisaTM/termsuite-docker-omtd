@@ -74,9 +74,9 @@ argsParse () {
 
         case ${paramName} in
           # Input corpus' files uploaded to Custom resource directory ?
-          # resource-dir )
-          #   PARAMS+=" --${paramName} ${INPUT_PATH}"
-          #   ;;
+          resource-dir )
+            PARAMS+=" --${paramName} ${INPUT_PATH}"
+            ;;
 
           resource-jar | synonyms-dico | dictionary | source-termino | target-termino | term-list )
             PARAMS+=" --${paramName} ${INPUT_PATH}/${paramValue}"
@@ -86,9 +86,9 @@ argsParse () {
             PARAMS+=" --${paramName} ${OUTPUT_PATH}/${paramValue}"
             ;;
 
-          tsv-anno | json-anno | xmi-anno )
-            PARAMS+=" --${paramName} ${OUTPUT_PATH}"
-            ;;
+          # tsv-anno | json-anno | xmi-anno )
+          #   PARAMS+=" --${paramName} ${OUTPUT_PATH}"
+          #   ;;
 
           * )
             PARAMS+=" --${paramName} ${paramValue}"
@@ -112,20 +112,21 @@ argsParse () {
 # Update OMTD command with parameters' values (<executable> <component> <parameters>)
 case ${COMP} in
   PreprocessorCLI )
-    PARAMS="-t /opt/treetagger"
+    PARAMS="-t /opt/treetagger --info"
     argsParse "$@"
-    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
+    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} --xmi-anno ${OUTPUT_PATH} ${PARAMS}"
   ;;
 
   TerminologyExtractorCLI )
-    PARAMS="-t /opt/treetagger"
+    PARAMS="-t /opt/treetagger --info"
     # echo $"Parsing parameters => $@"
     argsParse "$@"
     # CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
-    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS} --tsv ${OUTPUT_PATH}/TermExtractTSV.tsv --language en --info" # Test OMTD
+    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS} --tsv ${OUTPUT_PATH}/TermExtractTSV.tsv --language en" # Test OMTD
   ;;
 
   AlignerCLI )
+    PARAMS="--info"
     argsParse "$@"
     CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
   ;;
