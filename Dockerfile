@@ -39,8 +39,9 @@ RUN  curl -O -L https://search.maven.org/remotecontent?filepath=fr/univ-nantes/t
 COPY ./termsuite /opt/
 RUN chmod a+x /opt/termsuite
 
-ENV PATH /opt:$PATH
+ENV PATH="/opt:${PATH}"
 
-ENTRYPOINT ["/opt/termsuite"]
+# ENTRYPOINT ["/opt/termsuite"]
+# CMD ["termsuite"]
 
 RUN apt-get purge -y --auto-remove
