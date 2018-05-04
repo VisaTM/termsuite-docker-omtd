@@ -2,7 +2,7 @@
 
 JAR=$(ls /opt/termsuite-core-*.jar) # classpath for jar file
 HELP="Usage: termsuite fr.univnantes.termsuite.tools.{PreprocessorCLI | TerminologyExtractorCLI | AlignerCLI}"
-# echo $"Galaxy command => $0 $@"
+echo $"Galaxy command => $0 $@"
 
 EXEC=$0 # Get the executable name as first argument from CLI
 if [ "$EXEC"="/opt/termsuite" ]; then
@@ -10,7 +10,7 @@ if [ "$EXEC"="/opt/termsuite" ]; then
   COMP=$(echo ${1} | cut -f5 -d.)
   case ${COMP} in
     PreprocessorCLI | TerminologyExtractorCLI | AlignerCLI )
-      echo $"Shift COMP => ${1}"
+      # echo $"Shift COMP => ${1}"
       shift # remove second argument
     ;;
 
