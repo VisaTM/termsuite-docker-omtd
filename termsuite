@@ -86,9 +86,13 @@ argsParse () {
             PARAMS+=" --${paramName} ${INPUT_PATH}/${paramValue}"
             ;;
 
-          tsv | tbx | json )
-            PARAMS+=" --${paramName} ${OUTPUT_PATH}/${paramValue}"
-            ;;
+          # tsv | tbx | json )
+          #   if [ -n "$paramValue" ]; then
+          #     PARAMS+=" --${paramName} ${OUTPUT_PATH}/${paramValue}"
+          #   else
+          #     PARAMS+=" --${paramName} ${OUTPUT_PATH}/TermExtract.${paramName}"
+          #   fi
+          #   ;;
 
           # tsv-anno | json-anno | xmi-anno )
           #   PARAMS+=" --${paramName} ${OUTPUT_PATH}"
@@ -117,20 +121,21 @@ argsParse () {
 case ${COMP} in
   PreprocessorCLI )
     PARAMS="-t /opt/treetagger --info"
+    # echo $"Parsing parameters => $@"
     argsParse "$@"
     CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} --xmi-anno ${OUTPUT_PATH} ${PARAMS}"
   ;;
 
   TerminologyExtractorCLI )
-    PARAMS="-t /opt/treetagger --info"
+    PARAMS="--info"
     # echo $"Parsing parameters => $@"
     argsParse "$@"
-    # CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
-    CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS} --tsv ${OUTPUT_PATH}/TermExtractTSV.tsv --language en" # Test OMTD
+    CMD="java -cp $JAR ${MAIN} --from-prepared-corpus ${INPUT_PATH} --json ${OUTPUT_PATH}/TerminologyExtractor.json ${PARAMS}"
   ;;
 
   AlignerCLI )
     PARAMS="--info"
+    # echo $"Parsing parameters => $@"
     argsParse "$@"
     CMD="java -cp $JAR ${MAIN} -c ${INPUT_PATH} ${PARAMS}"
   ;;
