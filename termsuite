@@ -98,9 +98,17 @@ argsParse () {
           #   PARAMS+=" --${paramName} ${OUTPUT_PATH}"
           #   ;;
 
+          # Boolean parameters
+          disable-gathering )
+            if [ "$paramValue"="true" ]; then
+              PARAMS+=" --${paramName}"
+              # echo $"PARAMS => ${paramName} * ${paramValue}"
+            fi
+            ;;
+
           * )
             PARAMS+=" --${paramName} ${paramValue}"
-            # echo $"PARAMS => ${paramNameString} * ${paramName} * ${paramValue}"
+            # echo $"PARAMS => ${paramName} * ${paramValue}"
             ;;
         esac
 
