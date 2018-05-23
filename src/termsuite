@@ -106,6 +106,14 @@ argsParse () {
             fi
             ;;
 
+          # filtering parameters
+          post-filter-top-n )
+            if [ "$paramValue"> 0 ]; then
+              PARAMS+=" --${paramName}=$paramValue --post-filter-property=spec"
+              # echo $"PARAMS => ${paramName} * ${paramValue}"
+            fi
+            ;;
+
           * )
             PARAMS+=" --${paramName} ${paramValue}"
             # echo $"PARAMS => ${paramName} * ${paramValue}"
