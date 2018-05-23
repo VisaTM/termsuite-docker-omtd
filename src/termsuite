@@ -100,7 +100,7 @@ argsParse () {
 
           # Boolean parameters
           disable-gathering )
-            if [ "$paramValue"="true" ]; then
+            if [ "$paramValue" = true ]; then
               PARAMS+=" --${paramName}"
               # echo $"PARAMS => ${paramName} * ${paramValue}"
             fi
