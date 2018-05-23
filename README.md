@@ -39,7 +39,7 @@ termsuite fr.univnantes.termsuite.tools.{PreprocessorCLI | TerminologyExtractorC
 There are currently three TermSuite tools available with the docker images:
 
 
- 1. `termsuite fr.univnantes.termsuite.tools.PreprocessorCLI` applies TermSuite preprocessing to documents).
+ - `termsuite fr.univnantes.termsuite.tools.PreprocessorCLI` applies TermSuite preprocessing to documents).
 
 OMTD-Galaxy like command:
 
@@ -55,7 +55,7 @@ visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.PreprocessorCLI \
 --param:language=en
 ```
 
- 1. `termsuite fr.univnantes.termsuite.tools.TerminologyExtractorCLI` extracts terminologies from a domain-specific corpus.
+ - `termsuite fr.univnantes.termsuite.tools.TerminologyExtractorCLI` extracts terminologies from a domain-specific corpus.
 
 OMTD-Galaxy like command:
 
@@ -77,7 +77,7 @@ You can add optional parameters:
 --param:post-filter-top-n=60
 ```
 
- 1. `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners.
+ - `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners.
 
 OMTD-Galaxy like command:
 
