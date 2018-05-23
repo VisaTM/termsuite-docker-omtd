@@ -10,18 +10,21 @@ A docker project for:
 1. Clone this docker project:
 
 ```
-$ git clone https://github.com/termsuite/termsuite-docker-omtd.git
+$ git clone https://github.com/VisaTM/termsuite-docker-omtd.git
 ```
 
 2. Build the docker image:
 
 ```
 $ cd termsuite-docker-omtd
-$ docker build --rm -t visatm/termsuite-omtd:latest .
 ```
 If Behind a proxy:
 ```
-$ docker build --build-arg http_proxy=${http_proxy} --build-arg https_proxy=${https_proxy} --build-arg no_proxy=${no_proxy} -t visatm/termsuite-omtd:latest .
+$ docker build --build-arg http_proxy="$http_proxy" --build-arg https_proxy="$https_proxy" --build-arg no_proxy="$no_proxy" -t visatm/termsuite-omtd:latest .
+```
+If not:
+```
+$ docker build --rm -t visatm/termsuite-omtd:latest .
 ```
 
 # Running TermSuite
@@ -42,13 +45,13 @@ OMTD-Galaxy like command:
 
 ```
 docker run --rm -it -v $PWD/termsuite:/opt/termsuite \
--v /path/to/corpusInput:/path/to/corpusInput \
--v /path/to/corpusOutput:/path/to/corpusOutput \
--w /path/to/corpusOutput \
+-v /path/to/input/corpus:/path/to/input/corpus \
+-v /path/to/output/corpus:/path/to/output/corpus \
+-w /path/to/output/corpus \
 --name termsuite-omtd \
 visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.PreprocessorCLI \
---input /path/to/corpusInput \
---output /path/to/corpusOutput \
+--input /path/to/input/corpus \
+--output /path/to/output/corpus \
 --param:language=en
 ```
 
@@ -58,14 +61,20 @@ OMTD-Galaxy like command:
 
 ```
 docker run --rm -it -v $PWD/termsuite:/opt/termsuite \
--v /path/to/corpusInput:/path/to/corpusInput \
--v /path/to/corpusOutput:/path/to/corpusOutput \
--w /path/to/corpusOutput \
+-v /path/to/input/corpus:/path/to/input/corpus \
+-v /path/to/output/corpus:/path/to/output/corpus \
+-w /path/to/output/corpus \
 --name termsuite-omtd \
 visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.TerminologyExtractorCLI \
---input /path/to/corpusInput \
---output /path/to/corpusOutput \
+--input /path/to/input/corpus \
+--output /path/to/output/corpus \
 --param:language=en
+```
+
+You can add optional parameters:
+```
+--param:disable-gathering=false \
+--param:post-filter-top-n=60
 ```
 
  1. `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners.
@@ -74,13 +83,13 @@ OMTD-Galaxy like command:
 
 ```
 docker run --rm -it -v $PWD/termsuite:/opt/termsuite \
--v /path/to/fileInput:/path/to/fileInput \
--v /path/to/fileOutput:/path/to/fileOutput \
--w /path/to/fileOutput \
+-v /path/to/input/file:/path/to/input/file \
+-v /path/to/output/file:/path/to/output/file \
+-w /path/to/output/file \
 --name termsuite-omtd \
 visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.AlignerCLI \
---input /path/to/fileInput \
---output /path/to/fileOutput \
+--input /path/to/input/file \
+--output /path/to/output/file \
 --param:source-termino=targetTermino.?
 --param:target-termino=sourceTermino.?
 --param:dictionary=dictionary.?
@@ -88,3 +97,16 @@ visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.AlignerCLI \
 ```
 
 See TermSuite [Command Line API documentation](https://termsuite.github.io/documentation/command-line-api/) to get details on possible parameters for each of these programs.
+
+
+# Pushing Termsuite-omtd docker image
+
+You need first to connect to DockerHub with your credentials (see [docs](https://docs.docker.com/engine/reference/commandline/login/) ):
+```
+$ docker login --username mhabsaoui  --password-stdin
+```
+
+Then push the built docker image to DockerHub
+```
+$ docker push visatm/termsuite-omtd:latest
+```
