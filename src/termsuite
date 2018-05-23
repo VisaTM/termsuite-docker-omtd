@@ -108,7 +108,7 @@ argsParse () {
 
           # filtering parameters
           post-filter-top-n )
-            if [ "$paramValue"> 0 ]; then
+            if [ "$paramValue" -gt 0 ]; then
               PARAMS+=" --${paramName}=$paramValue --post-filter-property=spec"
               # echo $"PARAMS => ${paramName} * ${paramValue}"
             fi
