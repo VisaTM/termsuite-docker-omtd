@@ -34,9 +34,10 @@ RUN mv french-utf8.par french.par \
     && chmod a+x /opt/treetagger/models/
 
 WORKDIR /opt/
-RUN  curl -O -L https://search.maven.org/remotecontent?filepath=fr/univ-nantes/termsuite/termsuite-core/${TERMSUITE_VERSION}/termsuite-core-${TERMSUITE_VERSION}.jar
+# RUN  curl -O -L https://search.maven.org/remotecontent?filepath=fr/univ-nantes/termsuite/termsuite-core/${TERMSUITE_VERSION}/termsuite-core-${TERMSUITE_VERSION}.jar
+COPY  ./src/termsuite-core-omtd-3.0.10.jar /opt/
 
-COPY ./termsuite /opt/
+COPY ./src/termsuite /opt/
 RUN chmod a+x /opt/termsuite
 
 ENV PATH /opt:$PATH
