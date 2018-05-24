@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ms:componentMetadataRecord xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xmlns:ms="http://www.meta-share.org/OMTD-SHARE_XMLSchema">
   <ms:metadataHeaderInfo>
-    <ms:metadataRecordIdentifier metadataIdentifierSchemeName="OMTD">fc7f1a71-f223-48c4-9682-1524d46e9f66</ms:metadataRecordIdentifier>
+    <ms:metadataRecordIdentifier metadataIdentifierSchemeName="OMTD">f7e8317d-c6c3-47c0-91a7-7cb6ba0262d0</ms:metadataRecordIdentifier>
     <ms:metadataCreationDate>2018-05-22Z</ms:metadataCreationDate>
     <ms:metadataCreators>
       <ms:metadataCreator>
@@ -19,13 +19,13 @@
           <ms:position>member</ms:position>
           <ms:affiliatedOrganization>
             <ms:organizationNames>
-              <ms:organizationName>INIST-CNRS</ms:organizationName>
+              <ms:organizationName lang="en">INIST-CNRS</ms:organizationName>
             </ms:organizationNames>
           </ms:affiliatedOrganization>
         </ms:affiliation>
       </ms:metadataCreator>
     </ms:metadataCreators>
-    <ms:metadataLastDateUpdated>2018-05-22Z</ms:metadataLastDateUpdated>
+    <ms:metadataLastDateUpdated>2018-05-24Z</ms:metadataLastDateUpdated>
   </ms:metadataHeaderInfo>
   <ms:componentInfo>
     <ms:resourceType>component</ms:resourceType>
@@ -37,7 +37,7 @@
         <ms:description lang="en">TermSuiteExtrator Extracts terminologies from a domain-specific corpus (or preprocessed corpus). Spotted terms are analyzed, gathered, filtered, and ranked by specificity to the domain.</ms:description>
       </ms:descriptions>
       <ms:resourceIdentifiers>
-        <ms:resourceIdentifier resourceIdentifierSchemeName="OMTD">fc7f1a71-f223-48c4-9682-1524d46e9f66</ms:resourceIdentifier>
+        <ms:resourceIdentifier resourceIdentifierSchemeName="OMTD">f7e8317d-c6c3-47c0-91a7-7cb6ba0262d0</ms:resourceIdentifier>
         <ms:resourceIdentifier resourceIdentifierSchemeName="OMTD-docker">fr.univnantes.termsuite.tools.TerminologyExtractorCLI</ms:resourceIdentifier>
       </ms:resourceIdentifiers>
       <ms:public>false</ms:public>
@@ -107,7 +107,7 @@
         <ms:defaultValue>en</ms:defaultValue>
       </ms:parameterInfo>
       <ms:parameterInfo>
-        <ms:parameterName>disable-gathering</ms:parameterName>
+        <ms:parameterName>disable_gathering</ms:parameterName>
         <ms:parameterLabel>disable-gathering</ms:parameterLabel>
         <ms:parameterDescription>Disable variant term gathering.</ms:parameterDescription>
         <ms:parameterType>boolean</ms:parameterType>
@@ -116,7 +116,7 @@
         <ms:defaultValue>false</ms:defaultValue>
       </ms:parameterInfo>
       <ms:parameterInfo>
-        <ms:parameterName>post-filter-top-n</ms:parameterName>
+        <ms:parameterName>post_filter_top_n</ms:parameterName>
         <ms:parameterLabel>post-filter-top-n</ms:parameterLabel>
         <ms:parameterDescription>N value for post-gathering filtering over top N terms.</ms:parameterDescription>
         <ms:parameterType>integer</ms:parameterType>

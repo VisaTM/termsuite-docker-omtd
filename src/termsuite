@@ -99,17 +99,17 @@ argsParse () {
           #   ;;
 
           # Boolean parameters
-          disable-gathering )
+          disable_gathering )
             if [ "$paramValue" = true ]; then
-              PARAMS+=" --${paramName}"
+              PARAMS+=" --disable-gathering"
               # echo $"PARAMS => ${paramName} * ${paramValue}"
             fi
             ;;
 
           # filtering parameters
-          post-filter-top-n )
+          post_filter_top_n )
             if [ "$paramValue" -gt 0 ]; then
-              PARAMS+=" --${paramName}=$paramValue --post-filter-property=spec"
+              PARAMS+=" --post-filter-top-n=$paramValue --post-filter-property=spec"
               # echo $"PARAMS => ${paramName} * ${paramValue}"
             fi
             ;;
