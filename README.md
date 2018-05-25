@@ -22,7 +22,7 @@ If Behind a proxy:
 ```
 $ docker build --build-arg http_proxy="$http_proxy" --build-arg https_proxy="$https_proxy" --build-arg no_proxy="$no_proxy" -t visatm/termsuite-omtd:latest .
 ```
-If not:
+If not, simply:
 ```
 $ docker build --rm -t visatm/termsuite-omtd:latest .
 ```
@@ -36,7 +36,7 @@ termsuite fr.univnantes.termsuite.tools.{PreprocessorCLI | TerminologyExtractorC
 ```
 
 
-There are currently three TermSuite tools available with the docker images:
+There are currently three TermSuite tools available within the docker image:
 
 
  - `termsuite fr.univnantes.termsuite.tools.PreprocessorCLI` applies TermSuite preprocessing to documents).
@@ -44,7 +44,7 @@ There are currently three TermSuite tools available with the docker images:
 OMTD-Galaxy like command:
 
 ```
-docker run --rm -it -v $PWD/termsuite:/opt/termsuite \
+docker run --rm -it \
 -v /path/to/input/corpus:/path/to/input/corpus \
 -v /path/to/output/corpus:/path/to/output/corpus \
 -w /path/to/output/corpus \
@@ -60,7 +60,7 @@ visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.PreprocessorCLI \
 OMTD-Galaxy like command:
 
 ```
-docker run --rm -it -v $PWD/termsuite:/opt/termsuite \
+docker run --rm -it \
 -v /path/to/input/corpus:/path/to/input/corpus \
 -v /path/to/output/corpus:/path/to/output/corpus \
 -w /path/to/output/corpus \
@@ -71,18 +71,18 @@ visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.TerminologyExtract
 --param:language=en
 ```
 
-You can add optional parameters:
+You can add those optional parameters (one of them or both):
 ```
---param:disable-gathering=false \
---param:post-filter-top-n=60
+--param:disable_gathering=true \
+--param:post_filter_top_n=60
 ```
 
- - `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners.
+ - `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners (WIP because of ancilary resources not being uploadable).
 
 OMTD-Galaxy like command:
 
 ```
-docker run --rm -it -v $PWD/termsuite:/opt/termsuite \
+docker run --rm -it \
 -v /path/to/input/file:/path/to/input/file \
 -v /path/to/output/file:/path/to/output/file \
 -w /path/to/output/file \
@@ -90,10 +90,16 @@ docker run --rm -it -v $PWD/termsuite:/opt/termsuite \
 visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.AlignerCLI \
 --input /path/to/input/file \
 --output /path/to/output/file \
---param:source-termino=targetTermino.?
---param:target-termino=sourceTermino.?
+--param:source_termino=targetTermino.?
+--param:target_termino=sourceTermino.?
 --param:dictionary=dictionary.?
 --param:tsv=AlignerResult.tsv
+```
+
+#### N.B. :
+You can test your multiple modifications of the 'src/termsuite' script without having to rebuild the docker image each time. For that you need to add this mount:
+```
+-v $PWD/src/termsuite:/opt/termsuite
 ```
 
 See TermSuite [Command Line API documentation](https://termsuite.github.io/documentation/command-line-api/) to get details on possible parameters for each of these programs.
@@ -103,7 +109,7 @@ See TermSuite [Command Line API documentation](https://termsuite.github.io/docum
 
 You need first to connect to DockerHub with your credentials (see [docs](https://docs.docker.com/engine/reference/commandline/login/) ):
 ```
-$ docker login --username mhabsaoui  --password-stdin
+$ docker login --username <myDockerhubUserName>
 ```
 
 Then push the built docker image to DockerHub
