@@ -40,7 +40,7 @@ termsuite fr.univnantes.termsuite.tools.{PreprocessorCLI | TerminologyExtractorC
 There are currently three TermSuite components available within the docker image:
 
 
- - `termsuite fr.univnantes.termsuite.tools.PreprocessorCLI` applies TermSuite preprocessing to documents. This component now supports also Xmi format corpus as input. For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/preprocessor-cli/).
+ - `termsuite fr.univnantes.termsuite.tools.PreprocessorCLI` applies TermSuite preprocessing to documents. This component now supports also Xmi format corpus as input, and has been preset to produce only Xmi output corpus having all spotted term annotations (--xmi-anno). For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/preprocessor-cli/).
 
 OMTD-Galaxy like command:
 
@@ -56,7 +56,7 @@ visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.PreprocessorCLI \
 --param:language=en
 ```
 
- - `termsuite fr.univnantes.termsuite.tools.TerminologyExtractorCLI` extracts terminologies from a domain-specific corpus. For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/terminology-extractor-cli/).
+ - `termsuite fr.univnantes.termsuite.tools.TerminologyExtractorCLI` extracts terminologies from a domain-specific corpus. This component has been preset to consume only XMI format corpus (--from-prepared-corpus) and to output terminology to JSON file "TerminologyExtractor.json". For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/terminology-extractor-cli/).
 
 OMTD-Galaxy like command:
 
@@ -78,7 +78,7 @@ You can add those optional parameters (one of them or both):
 --param:post_filter_top_n=60
 ```
 
- - `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners (WIP because of ancilary resources not being uploadable on OMTD). For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/aligner-cli/).
+ - `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners (WIP because of ancilary resources not being uploadable/exploitable on OMTD). For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/aligner-cli/).
 
 OMTD-Galaxy like command:
 
@@ -98,7 +98,7 @@ visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.AlignerCLI \
 ```
 
 #### N.B. :
-You can test your multiple modifications of the 'src/termsuite' script without having to rebuild the docker image each time. For that you need to add this mount:
+You can test your multiple modifications of the 'src/termsuite' script without having to rebuild the docker image each time. Besides, info logs have been added to control executed CLI commands and debug logs are to be decommented if needed. For that you need to add this mount:
 ```
 -v $PWD/src/termsuite:/opt/termsuite
 ```
