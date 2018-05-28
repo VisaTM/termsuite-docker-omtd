@@ -1,9 +1,10 @@
 # termsuite-docker-omtd
 
+TermSuite-docker adapted to OpenMinted platform as docker Components. A docker project for:
 
-A docker project for:
  - building a TermSuite (v3.0.10) docker image including its 3rd-party dependencies (TreeTagger v3.2.1),
  - running TermSuite tools added to OpenMinted platform as Components.
+
 
 # Building TermSuite docker image
 
@@ -36,10 +37,10 @@ termsuite fr.univnantes.termsuite.tools.{PreprocessorCLI | TerminologyExtractorC
 ```
 
 
-There are currently three TermSuite tools available within the docker image:
+There are currently three TermSuite components available within the docker image:
 
 
- - `termsuite fr.univnantes.termsuite.tools.PreprocessorCLI` applies TermSuite preprocessing to documents).
+ - `termsuite fr.univnantes.termsuite.tools.PreprocessorCLI` applies TermSuite preprocessing to documents. This component now supports also Xmi format corpus as input. For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/preprocessor-cli/).
 
 OMTD-Galaxy like command:
 
@@ -55,7 +56,7 @@ visatm/termsuite-omtd termsuite fr.univnantes.termsuite.tools.PreprocessorCLI \
 --param:language=en
 ```
 
- - `termsuite fr.univnantes.termsuite.tools.TerminologyExtractorCLI` extracts terminologies from a domain-specific corpus.
+ - `termsuite fr.univnantes.termsuite.tools.TerminologyExtractorCLI` extracts terminologies from a domain-specific corpus. For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/terminology-extractor-cli/).
 
 OMTD-Galaxy like command:
 
@@ -77,7 +78,7 @@ You can add those optional parameters (one of them or both):
 --param:post_filter_top_n=60
 ```
 
- - `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners (WIP because of ancilary resources not being uploadable).
+ - `termsuite fr.univnantes.termsuite.tools.AlignerCLI` runs bilingual aligners (WIP because of ancilary resources not being uploadable on OMTD). For more details, see TermSuite [Command Line API documentation](http://termsuite.github.io/documentation/aligner-cli/).
 
 OMTD-Galaxy like command:
 
